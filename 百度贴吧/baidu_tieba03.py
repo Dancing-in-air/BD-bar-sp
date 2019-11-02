@@ -13,7 +13,7 @@ class BdbarSpider:
 
     def parse_url(self, url):  # 发送请求,获取响应
         response = requests.get(url, headers=self.header)
-        print(response.content.decode())
+        # print(response.content.decode())
         return response.content.decode()
 
     def get_content_list(self, html_str):  # 提取数据
