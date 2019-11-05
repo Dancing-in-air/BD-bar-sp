@@ -66,7 +66,7 @@ class TencentJob:
             html = self.parse_url(job["recruit_url"])
             recruit_list = self.get_recruit_content(html, job["job_type"])  # 提取岗位信息
             print(recruit_list)
-            self.save_content(recruit_list)
+            self.save_content(recruit_list)  # 保存数据到数据库
 
 
 if __name__ == '__main__':
