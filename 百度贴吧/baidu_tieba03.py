@@ -1,7 +1,7 @@
 import requests
 from lxml import etree
 import json
-
+from pymongo import MongoClient
 
 class BdbarSpider:
     def __init__(self, name):
@@ -34,6 +34,12 @@ class BdbarSpider:
             content_list.append(item)
 
         return content_list
+
+    def save_contente_mongodb(self):
+        db=MongoClient()["Spider"]["baidu"]
+        db.insert()
+
+
 
     def get_img_list(self, detail_url):  # 获取帖子中的图片
         pass
