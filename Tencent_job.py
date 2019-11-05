@@ -2,12 +2,10 @@ from selenium import webdriver
 from lxml import etree
 from pymongo import MongoClient
 
-client = MongoClient()
-collection = client["TencentJob"]["content"]
-
 
 class TencentJob:
     def __init__(self):
+        self.collection = MongoClient()["Ten_job"]["Job"]  # 创建一个数据库Ten_job和库集合Job
         self.start_url = "https://careers.tencent.com/jobopportunity.html"
         self.part_url = "https://careers.tencent.com/"  # 工作类型网址前部分
 
@@ -55,7 +53,7 @@ class TencentJob:
         """
             将数据保存在mongodb
         """
-        collection.insert_many(item)
+        self.collection.insert_many(item)
 
     def run(self):
         html = self.parse_url(self.start_url)  # 获取主页源代码
@@ -72,6 +70,6 @@ class TencentJob:
 if __name__ == '__main__':
     spider = TencentJob()
     spider.run()
-    ret = collection.find({"name": 1, "addr": 1})
+    ret = spider.collection.find({"name": 1, "addr": 1})
     for i in ret:
         print(i)
