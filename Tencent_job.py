@@ -1,18 +1,23 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from lxml import etree
 from pymongo import MongoClient
 
 
 class TencentJob:
     def __init__(self):
+        self.chrome_options = Options()
+        self.chrome_options.add_argument("--headless")
+        self.chrome_options.add_argument("--disable-gpu")
+        self.driver = webdriver.Chrome(chrome_options=self.chrome_options)  # 设置Chrome无界面
         self.collection = MongoClient()["Ten_job"]["Job"]  # 创建一个数据库Ten_job和库集合Job
         self.start_url = "https://careers.tencent.com/jobopportunity.html"
         self.part_url = "https://careers.tencent.com/"  # 工作类型网址前部分
 
     def parse_url(self, url):
-        driver = webdriver.Chrome()
-        driver.get(url)
-        html = driver.page_source
+        self.driver = webdriver.Chrome()
+        self.driver.get(url)
+        html = self.driver.page_source
         return html
 
     def get_job_content(self, html):
